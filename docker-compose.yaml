@@ -1,0 +1,16 @@
+version: '3'
+volumes:
+        db_data: {}
+services:
+    db:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - database=Products
+                - password=password
+        image: db_image
+        volumes:
+            - /var/lib/mysql:/var/lib/mysql
+        ports:
+            - "3306:3306"
