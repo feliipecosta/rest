@@ -1,14 +1,33 @@
-FROM mariadb:focal
+FROM golang:alpine
 
-ARG database
-ARG password
+# Set necessary environmet variables needed for our image
+#ENV GO111MODULE=on \
+#    CGO_ENABLED=0 \
+#    GOOS=linux \
+#    GOARCH=amd64
 
-RUN echo ${database}
-RUN echo ${password}
+# Move to working directory /build
+#WORKDIR /build
 
-MAINTAINER Felipe Moura
+# Copy and download dependency using go mod
+#COPY go.mod .
+#COPY go.sum .
+#RUN go mod download
 
-ENV MYSQL_DATABASE=${database} \
-    MYSQL_ROOT_PASSWORD=${password}
+# Copy the code into the container
+#COPY . .
 
-EXPOSE 3306
+# Build the application
+#RUN go build -o main .
+
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
+
+# Copy binary from build to main folder
+#RUN cp /build/main .
+
+# Export necessary port
+EXPOSE 40839
+
+# Command to run when starting the container
+CMD ["/dist/main"]

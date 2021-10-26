@@ -1,16 +1,18 @@
-version: '3'
-volumes:
-        db_data: {}
+version: "3.2"
+
 services:
-    db:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                - database=Products
-                - password=password
-        image: db_image
-        volumes:
-            - /var/lib/mysql:/var/lib/mysql
-        ports:
-            - "3306:3306"
+  go-api:
+    container_name: go-api
+    image: golang:alpine
+    hostname: api
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 40839:40839
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge

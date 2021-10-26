@@ -11,6 +11,7 @@ pipeline {
     stages {        
         stage('Compile') {
             steps {
+                sh 'go get go.mod'
                 sh 'go build'
             }
         }
